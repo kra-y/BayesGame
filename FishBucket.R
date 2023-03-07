@@ -9,14 +9,14 @@
 
 # We need to assign the probabilities of the events.
 
-#P(H|E): is the probability that the number of fish in the lake (H) given the evidence. H is the value of the first guess in ths case.
+#P(H|E): is the probability that the number of fish in the lake (H) given the evidence. H is the value of the first guess in this case.
 
 
 
 
 N <- 100
 prior <- rep(1/N, N)
-evidence <- sum(prior * likelihood(1:N, 40, 40))
+evidence <- sum(prior * likelihood(1:N, 5, 40))
 posterior <- likelihood(1:N, 40, 40) * prior / evidence
 plot(posterior, type="h")
 
