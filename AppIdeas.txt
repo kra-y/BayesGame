@@ -1,0 +1,21 @@
+
+Prior distribution: Start by visualizing the prior distribution of the number of fish in the lake. You can use a histogram or a density plot to show the distribution. Add sliders or input fields to allow users to adjust the parameters of the prior distribution, such as the mean and standard deviation.
+
+Catching fish: Add a button that simulates the process of catching fish and marking them. Every time the button is clicked, the app should update the plot with the new data and the updated posterior distribution.
+
+Posterior distribution: Show the posterior distribution of the number of fish in the lake after each catch. You can visualize the distribution using a histogram, a density plot, or a line chart. Add a slider or input field that allows users to adjust the number of catches.
+
+
+Animation: Use Plotly's animation capabilities to create an animated visualization of the Bayesian updating process. The animation should show how the prior distribution is updated after each catch and how the posterior distribution changes over time.
+
+
+Summary statistics: Add summary statistics such as the mean, median, and standard deviation of the posterior distribution. Display these statistics in a separate panel or in a tooltip that appears when the user hovers over the plot.
+
+
+Sensitivity analysis: Add a sensitivity analysis feature that allows users to see how the posterior distribution changes when they adjust the prior distribution or the likelihood function. This can help users understand how their assumptions and beliefs affect the posterior distribution.
+
+
+User inputs: Allow users to input their own data, such as the number of fish caught and the number of marked fish, and see how the Bayesian updating process works with their data.
+
+
+Additional examples: Include additional examples of Bayesian updating, such as medical diagnosis or opinion polling. This can help users see how Bayesian updating can be applied in different contexts.
