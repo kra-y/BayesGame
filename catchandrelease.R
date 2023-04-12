@@ -1,43 +1,40 @@
 set.seed(98)
 library(tidyverse)
+i=2
+j = 20
 
 # Set the initial values
-FishPopulation <- sample(20:1000, 1)
-prior <- rep(1/FishPopulation, FishPopulation)
+FishPopulation <- sample(20:1000,1)
+prior <- dbinom(20:1000,size = 1, prob = 1/FishPopulation)
+
 
 # Initialize a data frame to store the results of each day
 bucket <- data.frame(
-  "day" = 1:21,
-  "n_caught" = rep(20,21),
-  "n_marked" = rep(NA,21),
-  "n_umarked" = c(FishPopulation,rep(NA,20)),
-  "total_unmarked" = rep(NA,21),
-  "total_marked_fish" = rep(NA,21),
-  "probability_draw_marked" = c(0,rep(NA,20)),
-  "hypoth" = c(300,rep(NA,20))
+  "day" = 1:31,
+  "probability_draw_marked" = c(0,rep(NA,30)),
+  "n_marked_c" = c(0,rep(NA,30)),
+  "total_marked_r" = c(20,rep(NA,30)),
+  "hypoth" = c(300,rep(NA,30))
 )
 
 # Initialize the posterior matrix
-posterior_matrix <- matrix(0, nrow = FishPopulation, ncol = 21)
+posterior_matrix <- matrix(0, nrow = length(20:FishPopulation), ncol = 31)
+
+posterior_matrix[,1]<- prior
 
 # Iterate through each day and update the posterior distribution
-for (i in 1:21) {
+for (i in 2:30) {
   # Simulate catching some fish and marking them
-  if (i == 1) {
-    n_caught <- 20
-    n_marked <- 0
-    n_unmarked<-20
-  } else {
-    n_caught <- 20
-    n_unmarked <- 
-    n_marked <- 
-  }
-  
-  # Store the number of marked fish
-  bucket$n_marked[i] <- n_marked
+  bucket$probability_draw_marked[i] <- bucket$total_marked_r[i-1]/FishPopulation
+  bucket$n_marked_c[i] <-rbinom(n = 1,size = 20, prob = bucket$probability_draw_marked[i])
+  bucket$total_marked_r[i]<-bucket$total_marked_r[i-1]+bucket$n_marked_c[i]+(20 - bucket$n_marked_c[i])
   
   # Compute the likelihood of the data given each possible hypothesis
-  likelihood <- dbinom(n_marked, n_caught, 1:FishPopulation/FishPopulation)
+  for( j in 1:FishPopulation){
+    p_marked <- bucket$total_marked_r[i-1]/j
+    likelihood <- dbinom(bucket$n_marked_c[i],size = 20, prob = p_marked)
+    posterior_matrix[j,i]<-likelihood
+  }
   
   # Compute the prior by taking the previous posterior as the new prior
   prior <- posterior_matrix[,i-1]
